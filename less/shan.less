@@ -1,0 +1,88 @@
+@cols:12;
+@minWidth:200px;
+@num1:800px;
+@num2:1200px;
+*{
+  box-sizing:border-box;
+}
+.container{
+  &{
+    width:@num1*1-@minWidth;
+    margin:auto;
+    height:auto;
+  }
+  &>.row{
+    width:100%;
+    .clear();
+  }
+  &-fluid{
+    width:100%;
+    height:auto;
+  }
+  &-fluid>.row{
+    width:100%;
+    .clear();
+  }
+}
+.col-m-hide{
+  display:block;
+}
+.col-s-hide{
+  display:none;
+}
+.col-l-hide{
+  display:block;
+}
+.loop();
+@media screen and (min-width:@num1){
+  .container{
+    width:@num1;
+    margin:auto;
+  }
+  .loop(m);
+  .col-s-hide{
+    display:block;
+  }
+  .col-m-hide{
+    display:none;
+  }
+  .col-l-hide{
+    display:block;
+  }
+}
+@media screen and (min-width:@num2){
+  .container{
+    width:@num2;
+    margin:auto;
+  }
+  .loop(l);
+  .col-s-hide{
+    display:block;
+  }
+  .col-l-hide{
+    display:none;
+  }
+  .col-m-hide{
+    display:block;
+  }
+}
+.clear(){
+  &:before,&:after{
+    content:"";
+    display:block;
+  }
+  &:after{
+    clear:both;
+  }
+}
+.loop(@type:s,@i:1) when (@i<=@cols) {
+  .container > .row>.col-@{type}-@{i} {
+    width: @i/@cols*100%;
+    float:left;
+  }
+  .container-fluid > .row>.col-@{type}-@{i} {
+    width: @i/@cols*100%;
+    float:left;
+  }
+  .loop(@type,@i+1);
+}
